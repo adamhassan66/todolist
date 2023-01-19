@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import List from "./components/List";
+import './App.css'
 
 function App() {
+  const [list, setList] =useState([
+      {value:"workout", isChecked: false},
+      {value:"algorithms", isChecked: false},
+      {value: "lecture", isChecked: false},
+    ]);
+  const [form, setForm] = useState()
+
+
+  const onSubmitHandler = (e, value) => {
+    e.preventDefault();
+    let newItem = {value: `${form}`, isChecked: false}
+    setList([...list, newItem]);
+    setForm("")
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>To Do List:</h1>
+      <form onSubmit = { onSubmitHandler} >
+        <label>Add to List  :</label>
+        <input className= "inputBox" type="text" onChange={ (e) => setForm(e.target.value)} value={form}></input>
+        <input type="submit" value="Add"></input>
+      </form>
+      <List list= {list} setList={setList}></List>
     </div>
   );
 }
